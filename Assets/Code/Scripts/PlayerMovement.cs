@@ -13,10 +13,9 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
 
-        Matrix4x4 isoMatrix = Matrix4x4.Rotate(Quaternion.Euler(0,45,0));    
-        Debug.Log(isoMatrix);
-        Debug.Log(isoMatrix.MultiplyPoint3x4(input));
-        rigidbody.velocity = isoMatrix.MultiplyPoint3x4(input) * speed;
+        Matrix4x4 isoMatrix = Matrix4x4.Rotate(Quaternion.Euler(0,45,0));
+        Vector3 normalizedInput = isoMatrix.MultiplyPoint3x4(input);
+        rigidbody.velocity = normalizedInput * speed;
     }
 
     void movementForKeyboard()
