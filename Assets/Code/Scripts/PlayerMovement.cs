@@ -11,11 +11,20 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+        movementAndRotation();
+    }
 
+
+    void movementAndRotation()
+    {
+        Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
         Matrix4x4 isoMatrix = Matrix4x4.Rotate(Quaternion.Euler(0,45,0));
         Vector3 normalizedInput = isoMatrix.MultiplyPoint3x4(input);
         rigidbody.velocity = normalizedInput * speed;
+        if(normalizedInput != Vector3.zero)
+        {
+            transform.rotation = Quaternion.LookRotation(normalizedInput);
+        }
     }
 
     void movementForKeyboard()
